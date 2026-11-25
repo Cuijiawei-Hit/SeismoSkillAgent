@@ -1,0 +1,38 @@
+/* Full-screen styles are scoped to the active map; the surrounding result layout is unchanged. */
+.map-fullscreen-button::before{content:"⛶";font:700 18px/1 sans-serif;margin-right:7px;vertical-align:-1px}
+.medical-map .map-fullscreen-button,.recovery-playback .map-fullscreen-button{background:#174a56;color:#fff;border-color:#174a56;min-height:38px;white-space:nowrap}
+.medical-map .map-fullscreen-button:hover,.recovery-playback .map-fullscreen-button:hover{background:#0c3541;border-color:#0c3541}
+.map-fullscreen{width:100%!important;height:100%!important;max-width:none!important;margin:0!important;padding:12px!important;background:#f6faf9!important;box-sizing:border-box;overflow:hidden;color:#173c42}
+.map-fullscreen-dialog{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:hidden;background:#f6faf9;z-index:2147483000}
+.map-fullscreen-dialog::backdrop{background:#f6faf9}
+.map-fullscreen--fallback{width:100vw!important;height:100dvh!important}
+.map-fullscreen::backdrop{background:#f6faf9}
+.medical-map.map-fullscreen{display:flex;flex-direction:column;gap:8px}
+.medical-map.map-fullscreen>.medical-map-toolbar{margin:0;flex-shrink:0;padding:7px 12px}
+.medical-map.map-fullscreen>.medical-map-layout{display:block;flex:1;min-height:0;width:100%;overflow:hidden}
+.medical-map.map-fullscreen .medical-map-cartography{position:relative;display:flex;flex-direction:column;height:100%;min-height:0}
+.medical-map.map-fullscreen .medical-map-canvas{flex:1;min-height:160px;height:auto!important}
+.medical-map.map-fullscreen .medical-map-map-footer{flex-shrink:0;padding:8px 14px;gap:8px 18px;display:flex;align-items:center;justify-content:space-between}
+.medical-map.map-fullscreen .medical-map-legend{max-width:none;padding:0;flex:1;min-width:0}
+.medical-map.map-fullscreen .medical-map-progress-key{justify-content:flex-start;gap:8px 22px}
+.medical-map.map-fullscreen .medical-map-symbol-key{margin-top:5px;gap:5px 14px}
+.medical-map.map-fullscreen .medical-map-map-actions{flex-shrink:0;padding:7px 12px;gap:10px}
+.medical-map.map-fullscreen .medical-map-map-footer .medical-map-map-actions{padding:0;border:0}
+.medical-map.map-fullscreen .medical-map-sidebar,.medical-map.map-fullscreen>.medical-map-scope,.medical-map.map-fullscreen>.medical-map-warning,.medical-map.map-fullscreen>.medical-map-method,.medical-map.map-fullscreen>.medical-map-compact-controls,.medical-map.map-fullscreen .medical-map-details-button,.medical-map.map-fullscreen .medical-map-explanation,.medical-map.map-fullscreen .medical-map-link-note,.medical-map.map-fullscreen .medical-map-density-note{display:none!important}
+.medical-map.map-fullscreen .medical-map-selection--compact{max-height:calc(100% - 130px);overflow:auto}
+.recovery-playback.map-fullscreen{display:flex;flex-direction:column;gap:8px}
+.recovery-playback.map-fullscreen>.rp-heading,.recovery-playback.map-fullscreen>.rp-detail-note,.recovery-playback.map-fullscreen>.rp-story-grid,.recovery-playback.map-fullscreen>.rp-hospital-panel,.recovery-playback.map-fullscreen>.rp-method{display:none!important}
+.recovery-playback.map-fullscreen>.rp-toolbar{flex-shrink:0;margin:0;padding:5px 10px;border-radius:6px}
+.recovery-playback.map-fullscreen>.rp-stage{display:flex;flex-direction:column;flex:1;min-height:0}
+.recovery-playback.map-fullscreen .rp-stage-heading,.recovery-playback.map-fullscreen .rp-metrics,.recovery-playback.map-fullscreen .rp-map-wrap>.rp-map-caption,.recovery-playback.map-fullscreen .rp-stage>.rp-map-caption,.recovery-playback.map-fullscreen .rp-milestones,.recovery-playback.map-fullscreen .rp-phase-row,.recovery-playback.map-fullscreen .rp-sample-options{display:none!important}
+.recovery-playback.map-fullscreen .rp-map-toolbar{flex-shrink:0;padding:6px 12px;gap:6px 12px}
+.recovery-playback.map-fullscreen .rp-map-wrap{flex:1;min-height:160px;display:flex;flex-direction:column}
+.recovery-playback.map-fullscreen .rp-map{flex:1;min-height:160px;height:auto!important}
+.recovery-playback.map-fullscreen .rp-map-status{flex-shrink:0;padding:4px 12px}
+.recovery-playback.map-fullscreen .rp-legend{flex-shrink:0;padding:7px 14px;min-height:0;gap:5px 16px}
+.recovery-playback.map-fullscreen .rp-player{flex-shrink:0;padding:8px 14px}
+.recovery-playback.map-fullscreen .rp-timeline{margin-top:7px}
+.recovery-playback.map-fullscreen .rp-time-ticks{margin-top:2px}
+.recovery-playback.map-fullscreen .rp-plan-tabs button,.recovery-playback.map-fullscreen .rp-map-tools button,.recovery-playback.map-fullscreen .rp-controls button{min-height:36px;padding:6px 12px}
+@media(max-height:650px){.map-fullscreen{padding:6px!important}.medical-map.map-fullscreen .medical-map-progress-meaning,.medical-map.map-fullscreen .medical-map-ranked-key,.recovery-playback.map-fullscreen .rp-legend>p,.recovery-playback.map-fullscreen .rp-time-ticks{display:none}.medical-map.map-fullscreen .medical-map-map-footer{padding:6px 10px}.recovery-playback.map-fullscreen .rp-player{padding:5px 10px}.recovery-playback.map-fullscreen .rp-map-place small{display:none}}
+@media(max-width:620px){.medical-map.map-fullscreen .medical-map-map-footer{flex-wrap:wrap}.medical-map.map-fullscreen .medical-map-map-actions{justify-content:flex-start}.medical-map.map-fullscreen .medical-map-selection--compact{position:absolute;top:10px;right:10px;width:min(260px,calc(100% - 20px));margin:0}.recovery-playback.map-fullscreen .rp-map-toolbar{gap:6px}.recovery-playback.map-fullscreen .rp-map-place{display:none}}

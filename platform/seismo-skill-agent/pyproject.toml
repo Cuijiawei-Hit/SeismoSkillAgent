@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "power-skill-agent"
+version = "0.3.0"
+description = "Independent Auckland electric-network seismic resilience platform with human review"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "engineering-skills>=0.4.0",
+  "langgraph>=1.2,<2.0",
+  "langgraph-checkpoint-sqlite>=3.1,<4.0",
+  "numpy>=1.26",
+  "openai>=2.0,<3.0",
+  "httpx>=0.28,<1",
+  "pydantic>=2.7",
+  "llama-index-core>=0.12,<0.15",
+  "llama-index-vector-stores-faiss>=0.3,<0.7",
+  "fastembed>=0.7,<1",
+  "faiss-cpu>=1.11,<2",
+]
+
+[project.optional-dependencies]
+faiss = ["faiss-cpu>=1.11,<2"]
+
+[project.scripts]
+power-skill-agent = "seismo_skill_agent.cli:main"
+power-skill-agent-web = "seismo_skill_agent.web:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+seismo_skill_agent = [
+  "web_static/*.html",
+  "web_static/*.css",
+  "web_static/*.js",
+  "web_static/vendor/**/*",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "../engineering-skills/src"]
+testpaths = ["tests"]

@@ -1,0 +1,168 @@
+.geographic-sandbox {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 260px;
+  background: #d5ddda;
+}
+.geographic-sandbox-viewport { position: absolute; inset: 0; z-index: 0; }
+.geographic-sandbox .cesium-viewer,
+.geographic-sandbox .cesium-viewer-cesiumWidgetContainer,
+.geographic-sandbox .cesium-widget,
+.geographic-sandbox .cesium-widget canvas { width: 100%; height: 100%; }
+.geographic-sandbox .cesium-viewer-bottom { left: 6px; bottom: 23px; font-size: 9px; }
+.geographic-sandbox-controls {
+  position: absolute;
+  z-index: 4;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #bacbc5;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 2px 12px #294a3d20;
+}
+.geographic-sandbox-controls button {
+  appearance: none;
+  width: auto;
+  min-width: 40px;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #164b42;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.geographic-sandbox-controls button:hover { background: #e5f0eb; }
+.geographic-sandbox-controls button:focus-visible { outline: 2px solid #007a43; outline-offset: 1px; }
+.geographic-sandbox-tooltip {
+  position: absolute;
+  z-index: 5;
+  max-width: 230px;
+  padding: 8px 10px;
+  border: 1px solid #b7cac2;
+  border-radius: 6px;
+  background: #fffffff5;
+  box-shadow: 0 3px 14px #183c3226;
+  color: #153c32;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+.geographic-sandbox-tooltip[hidden], .geographic-sandbox-status[hidden] { display: none; }
+.geographic-sandbox-status {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 32px;
+  color: #194c40;
+  background: #edf3ef;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+.geographic-sandbox-status::before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  margin-bottom: 12px;
+  border: 2px solid #ccdcd5;
+  border-top-color: #087a52;
+  border-radius: 50%;
+  animation: geographic-sandbox-loading 1s linear infinite;
+}
+.geographic-loading-title { font-size: 15px; color: #173f36; }
+.geographic-loading-detail { overflow-wrap: anywhere; }
+.geographic-loading-help { max-width: 40em; margin-top: 5px; color: #486057; font-size: 12px; }
+.geographic-sandbox-status.is-preview {
+  inset: auto 12px 32px 12px;
+  width: fit-content;
+  max-width: min(440px, calc(100% - 24px));
+  max-height: 42%;
+  overflow: auto;
+  justify-items: start;
+  align-content: start;
+  padding: 12px 15px;
+  border: 1px solid #a3bdb2;
+  border-radius: 8px;
+  background: #fffffff2;
+  box-shadow: 0 3px 14px #183c3226;
+  font-size: 12px;
+  text-align: left;
+}
+.geographic-sandbox-status.is-preview::before { width: 15px; height: 15px; margin: 0 0 6px; }
+.geographic-sandbox-status[data-state="failed"] { border-color: #bd7f37; background: #fff9ef; }
+.geographic-sandbox-status[data-state="failed"]::before { display: none; }
+.geographic-sandbox-status button { margin-top: 8px; padding: 7px 12px; border: 1px solid #145c4c; border-radius: 5px; color: #fff; background: #145c4c; font: inherit; font-weight: 600; cursor: pointer; }
+.geographic-sandbox-status button[hidden] { display: none; }
+.geographic-sandbox-status button:focus-visible { outline: 2px solid #173f36; outline-offset: 3px; }
+.geographic-sandbox-note {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 4px 8px;
+  background: #ffffffdc;
+  color: #385c50;
+  font-size: 10px;
+  line-height: 1.4;
+  pointer-events: auto;
+}
+@keyframes geographic-sandbox-loading { to { transform: rotate(360deg); } }
+@media (max-width: 640px) {
+  .geographic-sandbox-controls { top: 8px; right: 8px; }
+  .geographic-sandbox-controls button { padding: 5px 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .geographic-sandbox-status::before { animation: none; } }
+
+/* Engineering opt-in: geographic relief is context, labels carry saved result meaning. */
+.geographic-power-analysis { background: #e7edf3; }
+.geographic-power-analysis .geographic-sandbox-controls { border-color: #64748b; background: #fff; }
+.geographic-power-analysis .geographic-sandbox-controls button { min-height: 36px; color: #172b4d; font-size: 13px; }
+.geographic-power-analysis .geographic-sandbox-note { color: #334155; background: #fff; border-top: 1px solid #cbd5e1; font-size: 11px; }
+.geographic-power-leaders,
+.geographic-power-labels { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: hidden; }
+.geographic-power-labels { z-index: 3; }
+.geographic-power-leader { fill: none; stroke: #25354b; stroke-width: 1.5px; stroke-linecap: round; stroke-linejoin: round; }
+.geographic-power-label {
+  position: absolute; left: 0; top: 0; width: max-content; min-width: 148px; max-width: min(250px, calc(100% - 16px));
+  display: grid; gap: 3px; box-sizing: border-box; padding: 7px 10px 7px 12px;
+  border: 1px solid #64748b; border-left: 5px solid var(--power-label-color, #334155); border-radius: 6px;
+  background: #fff; color: #172b4d; box-shadow: 0 2px 5px #172b4d30;
+  font-family: inherit; font-size: 12px; line-height: 1.3; text-align: left; white-space: normal;
+  overflow-wrap: anywhere; pointer-events: auto; cursor: pointer;
+}
+.geographic-power-label[hidden] { display: none; }
+.geographic-power-label-title { color: #10233f; font-size: 13px; font-weight: 750; }
+.geographic-power-label-status { color: #172b4d; font-size: 12px; font-weight: 600; }
+.geographic-power-label-basis { color: #475569; font-size: 11px; line-height: 1.25; }
+.geographic-power-label-basis[hidden] { display: none; }
+.geographic-power-label:hover { border-color: #10233f; box-shadow: 0 2px 7px #10233f50; }
+.geographic-power-label.is-selected { outline: 3px solid #10233f; outline-offset: 2px; z-index: 1; }
+.geographic-power-label:focus-visible { outline: 3px solid #075bba; outline-offset: 3px; }
+
+/* Shared map-loading notices for every engineering agent and map host. */
+.engineering-network-map .network-sandbox-status,
+.network-scene-view-note[data-scene-mode="preparing"],
+.medical-map .medical-map-tile-status[data-medical-map-tile-status],
+.rp-map-status[data-rp-map-status],
+.city-geographic-preview .city-preview-status[data-city-preview-status],
+.city-geographic-preview.map-fullscreen .city-preview-status[data-city-preview-status],
+.geographic-sandbox-status,
+.geographic-sandbox-status .geographic-loading-title,
+.geographic-sandbox-status .geographic-loading-detail,
+.geographic-sandbox-status .geographic-loading-help {
+  color: #b91c1c;
+}

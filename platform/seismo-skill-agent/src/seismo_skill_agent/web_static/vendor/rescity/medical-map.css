@@ -1,0 +1,214 @@
+.medical-map { --map-ink:#173c42; --map-muted:#415c62; --map-line:#b8ccc6; --map-accent:#176b60; color:var(--map-ink); font-family:"Microsoft YaHei UI","Microsoft YaHei",sans-serif; min-width:0; margin:0 0 27px; container-type:inline-size; }
+.medical-map *, .medical-map *::before, .medical-map *::after { box-sizing:border-box; }
+.medical-map-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 20px; margin:0 0 12px; padding:10px 12px; border:1px solid #a9c1ba; border-radius:7px; background:#edf3f1; }
+.medical-map-control-group { display:flex; align-items:center; flex-wrap:wrap; gap:6px; }
+.medical-map-control-group > span { font-size:12px; font-weight:700; margin-right:4px; color:#365c53; }
+.medical-map button, .medical-map-state button { appearance:none; font:700 13px/1.45 "Microsoft YaHei UI","Microsoft YaHei",sans-serif; cursor:pointer; }
+.medical-map-control-group button, .medical-map-map-actions > button, .medical-map-state button { border:1px solid #8daaa0; border-radius:4px; padding:8px 12px; background:#fff; color:#284b42; }
+.medical-map-control-group button:hover, .medical-map-map-actions > button:hover, .medical-map-state button:hover { background:#d9e9e4; border-color:#477e71; }
+.medical-map-control-group button[aria-pressed=true] { background:#176b60; color:#fff; border-color:#176b60; box-shadow:0 1px 3px #164a4220; }
+.medical-map-control-group button[aria-pressed=true]:hover { background:#12584f; }
+.medical-map-layout { display:grid; grid-template-columns:minmax(0,1fr) 285px; border:1px solid var(--map-line); border-radius:6px; overflow:hidden; background:#fff; align-items:start; }
+.medical-map-cartography { min-width:0; }
+.medical-map-canvas { position:relative; isolation:isolate; height:480px; width:100%; background:#eef3f1; color:var(--map-ink); }
+.medical-map .leaflet-container { font-family:inherit; background:#eef3f1; }
+.medical-map .leaflet-tile-pane { filter:saturate(.22) brightness(1.035) contrast(.95); }
+.medical-map .leaflet-control-attribution { font-size:11px; background:rgba(255,255,255,.96); color:#263f46; }
+.medical-map .leaflet-control-attribution a { color:#145c80; text-decoration:underline; }
+.medical-map .leaflet-control-zoom a { color:#23473e; font-weight:700; background:#fff; }
+.medical-map .leaflet-control-zoom a:hover { background:#e2efeb; }
+.medical-map-hospital-marker { display:grid; place-items:center; width:18px; height:18px; background:none; border:0; }
+.medical-map-population-marker { display:grid; place-items:center; width:16px; height:20px; border:0; background:none; cursor:pointer; }
+.medical-map-population-glyph { display:block; width:16px; height:20px; overflow:visible; }
+.medical-map-population-marker:focus-visible { outline:2px solid #267b96; outline-offset:3px; border-radius:5px; }
+.medical-map-access-arrow { border:0; background:none; pointer-events:none; }
+.medical-map-person-key { display:inline-flex; flex:0 0 12px; width:12px; height:16px; align-items:center; justify-content:center; }
+.medical-map-person-key .medical-map-population-glyph { width:12px; height:16px; }
+.medical-map-link-note { margin:8px 0 0; color:#33515e; font-size:11px; line-height:1.6; }
+.medical-map-link-note span { color:#526c73; }
+.medical-map-hospital-symbol { position:relative; display:grid; place-items:center; width:16px; height:16px; margin:1px; border:0; border-radius:50%; background:#fff; color:#007a43; font-size:0; line-height:1; box-shadow:0 0 0 1px #fffffff2,0 1px 2px #173c4226; transition:box-shadow .16s ease; }
+.medical-map-hospital-ring-svg { display:block; width:100%; height:100%; overflow:visible; }
+.medical-map-hospital-ring-track { fill:none; stroke:#d0dbd4; }
+.medical-map-hospital-ring-progress { fill:none; stroke:#007a43; }
+.medical-map-hospital-ring-core { stroke:none; }
+.medical-map-hospital-marker:hover .medical-map-hospital-symbol,.medical-map-hospital-marker:focus-visible .medical-map-hospital-symbol { box-shadow:0 0 0 1px #fff,0 0 0 2.5px #254b5c,0 2px 4px #173c4226; }
+.medical-map-hospital-symbol.is-selected,.medical-map-hospital-marker.is-selected .medical-map-hospital-symbol { box-shadow:0 0 0 1px #fff,0 0 0 2.5px #244f64,0 2px 4px #173c4226; }
+.medical-map-hospital-symbol.is-priority::after,.medical-map-hospital-marker.is-priority .medical-map-hospital-symbol::after { content:""; position:absolute; top:0; right:0; width:4px; height:4px; border-radius:50%; background:#bf6a21; box-shadow:0 0 0 1px #fff; }
+.medical-map-hospital-symbol.is-zero .medical-map-hospital-ring-progress,.medical-map-hospital-symbol.is-missing .medical-map-hospital-ring-progress,.medical-map-ring-example.is-zero .medical-map-hospital-ring-progress,.medical-map-ring-example.is-missing .medical-map-hospital-ring-progress { display:none; }
+.medical-map-hospital-symbol.is-missing .medical-map-hospital-ring-track,.medical-map-ring-example.is-missing .medical-map-hospital-ring-track { stroke:#899894; stroke-dasharray:2 2; }
+.medical-map-hospital-marker:focus-visible { outline:0; }
+.medical-map .medical-map-tooltip { border:1px solid #c1d2ce; border-radius:6px; padding:7px 10px; color:#153c35; font-weight:700; font-size:12px; line-height:1.5; background:#fffffff7; box-shadow:0 3px 12px #243e3724; }
+.medical-map-density-note { margin:8px 0 0; color:#415f65; font-size:12px; line-height:1.65; }
+.medical-map-density-note:empty { display:none; }
+.medical-map-map-actions { display:flex; align-items:center; gap:14px; padding:10px 12px; border-top:1px solid var(--map-line); border-bottom:1px solid var(--map-line); flex-wrap:wrap; background:#f8faf9; }
+.medical-map-map-actions > button { padding:7px 10px; white-space:nowrap; }
+.medical-map-map-actions label { display:flex; align-items:center; gap:6px; font-size:12px; line-height:1.6; font-weight:700; color:#3b5658; cursor:pointer; }
+.medical-map-connections { flex-shrink:0; padding:10px 14px; border-top:1px solid var(--map-line); background:#f3f8f8; }
+.medical-map-connection-modes { display:flex; flex-wrap:wrap; align-items:center; gap:7px; }
+.medical-map-connection-modes button { min-height:36px; padding:7px 11px; border:1px solid #9ebbc0; border-radius:5px; background:#fff; color:#254e57; font-family:inherit; font-size:12px; font-weight:700; line-height:1.5; cursor:pointer; }
+.medical-map-connection-modes button:hover { background:#e2f0ef; border-color:#48818a; }
+.medical-map-connection-modes button[aria-pressed=true] { background:#174e5a; border-color:#174e5a; color:#fff; }
+.medical-map-connection-modes button:focus-visible { outline:3px solid #cc6b27; outline-offset:2px; }
+.medical-map-connection-status { margin:7px 0 0; color:#294953; font-size:12px; line-height:1.7; overflow-wrap:anywhere; }
+.medical-map-connection-missing { margin:9px 0; padding:8px 10px; border-left:3px solid #b26520; background:#fff5e9; color:#714213; font-size:12px; line-height:1.7; }
+.medical-map.map-fullscreen .medical-map-connections { padding:6px 12px; }
+.medical-map.map-fullscreen .medical-map-connection-status { margin-top:4px; }
+.medical-map input[type=checkbox] { accent-color:#176b60; width:16px; height:16px; margin:0; }
+.medical-map-map-footer { display:grid; grid-template-columns:minmax(190px,.85fr) minmax(0,1.15fr); gap:20px; padding:14px; align-items:start; }
+.medical-map-legend-heading { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:8px; font-size:12px; }
+.medical-map-legend-heading strong { font-weight:700; }
+.medical-map-legend-heading > span { color:var(--map-muted); font-size:11px; }
+.medical-map-colorbar { display:flex; width:100%; height:10px; border:1px solid #bacac7; border-radius:5px; overflow:hidden; }
+.medical-map-colorbar > span { flex:1; }
+.medical-map-scale-labels { display:flex; justify-content:space-between; gap:8px; margin-top:5px; font:11px Georgia,serif; font-variant-numeric:tabular-nums; }
+.medical-map-progress-key { display:flex; align-items:center; flex-wrap:wrap; justify-content:space-between; gap:8px 14px; padding:1px 0; color:#294c53; font:500 12px/1.5 "Microsoft YaHei UI","Microsoft YaHei",sans-serif; font-variant-numeric:tabular-nums; }
+.medical-map-progress-key > span { display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+.medical-map-progress-key > span > b { color:#294c53; font:700 12px/1.5 "Microsoft YaHei UI","Microsoft YaHei",sans-serif; }
+.medical-map-ring-example { position:relative; display:inline-grid; place-items:center; flex:0 0 16px; width:16px; height:16px; margin:0; border:0; border-radius:50%; background:#fff; line-height:1; }
+.medical-map-ring-example .medical-map-hospital-ring-svg { width:100%; height:100%; }
+.medical-map-progress-meaning { margin:6px 0 0; color:#38565d; font:400 12px/1.55 "Microsoft YaHei UI","Microsoft YaHei",sans-serif; }
+.medical-map-symbol-key { display:flex; flex-wrap:wrap; gap:6px 11px; font-size:11px; margin-top:10px; color:#465c5d; }
+.medical-map-symbol-key > span { display:flex; align-items:center; gap:5px; }
+.medical-map-population-toggle { display:inline-flex; align-items:center; gap:5px; color:#38585e; font-size:12px; line-height:1.55; cursor:pointer; }
+.medical-map .medical-map-population-toggle input[type=checkbox] { width:14px; height:14px; margin:0; accent-color:#176b60; cursor:pointer; }
+.medical-map-dot-key { width:7px; height:7px; border:1px solid #7c9196; border-radius:50%; background:#c8d5d5; display:inline-block; }
+.medical-map-ranked-key { flex-basis:100%; align-items:flex-start !important; color:#81501f; font-weight:700; line-height:1.7; }
+.medical-map-ranked-key .medical-map-dot-key { flex:0 0 12px; height:12px; border:3px solid #b75b12; background:#d7eeea; margin-top:3px; }
+.medical-map-priority-key { display:inline-block; flex:0 0 5px; width:5px; height:5px; margin-top:7px; border-radius:50%; background:#bf6a21; box-shadow:0 0 0 1px #fff; }
+.medical-map-dot-key--context { border-color:#899da0; background:#dbe4e3; }
+.medical-map-explanation { font-size:12px; line-height:1.9; margin:0; color:#3f5b60; font-weight:700; }
+.medical-map-sidebar { border-left:1px solid var(--map-line); min-width:0; width:100%; align-self:stretch; background:#fcfdfc; }
+.medical-map-selection { padding:17px 17px 15px; }
+.medical-map-selection-empty { min-height:164px; }
+.medical-map-selection-empty > span { font:700 28px Georgia,serif; color:#4c887a; }
+.medical-map-selection h4 { font-size:15px; line-height:1.6; margin:7px 0 9px; overflow-wrap:anywhere; }
+.medical-map-selection-empty p { font-size:12px; line-height:1.9; color:var(--map-muted); margin:0; }
+.medical-map-selection-heading > span { font-size:11px; font-weight:700; letter-spacing:.05em; color:#326a5c; }
+.medical-map-selection-heading small { display:block; font-size:11px; color:var(--map-muted); overflow-wrap:anywhere; }
+.medical-map-selection dl { margin:15px 0 9px; }
+.medical-map-selection dl > div { display:flex; justify-content:space-between; gap:15px; padding:7px 0; border-bottom:1px solid #e0e8e5; font-size:12px; line-height:1.6; }
+.medical-map-selection dt { color:#3d595d; }
+.medical-map-selection dd { margin:0; max-width:56%; text-align:right; font-weight:700; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.medical-map-coordinates { margin:10px 0 0; color:#577073; font-size:11px; font-variant-numeric:tabular-nums; }
+.medical-map-inline-note { font-size:11px; line-height:1.8; color:#526b70; margin:9px 0 0; }
+.medical-map-access-list { margin-top:13px; font-size:11px; }
+.medical-map-access-list summary { font-weight:700; line-height:1.7; cursor:pointer; color:#296759; }
+.medical-map-access-list ul { margin:9px 0; list-style:none; padding:0; }
+.medical-map-access-list li { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 8px; border-bottom:1px solid #e1e8e5; padding:8px 0; }
+.medical-map-access-list li button { border:0; padding:0; color:#215f56; text-align:left; background:none; font-size:11px; overflow-wrap:anywhere; }
+.medical-map-access-list li button:hover { text-decoration:underline; }
+.medical-map-access-list li > small { grid-column:1/-1; font-size:11px; color:#5b6f70; }
+.medical-map-access-list p { color:var(--map-muted); line-height:1.7; }
+.medical-map-weak { border-top:1px solid var(--map-line); padding:15px 0; }
+.medical-map-weak > h4 { font-size:13px; line-height:1.7; margin:0 17px 7px; }
+.medical-map-weak > p { font-size:11px; line-height:1.8; margin:0 17px 10px; color:var(--map-muted); }
+.medical-map-weak > small { display:block; font-size:11px; margin:9px 17px 0; color:var(--map-muted); line-height:1.7; }
+.medical-map-weak ol { margin:0; padding:0; list-style:none; max-height:280px; overflow:auto; scrollbar-width:thin; scrollbar-color:#8baa9f #f0f5f3; }
+.medical-map-weak li button { border:0; border-left:3px solid transparent; width:100%; background:transparent; padding:9px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; color:#263f46; text-align:left; }
+.medical-map-weak li button:hover { background:#e9f2ee; }
+.medical-map-weak li button[aria-pressed=true] { background:#deeee7; border-left-color:#176b60; }
+.medical-map-weak li button > span { min-width:0; }
+.medical-map-weak li button b { display:block; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.medical-map-weak li button small { display:block; font-size:11px; color:#526f69; margin-top:3px; font-weight:400; }
+.medical-map-weak li button > strong { font:700 13px Georgia,serif; color:#1e4e44; flex-shrink:0; }
+.medical-map-scope { display:flex; flex-wrap:wrap; justify-content:space-between; gap:5px 20px; font-size:11px; line-height:1.8; padding:10px 0 0; color:#526e6a; }
+.medical-map-scope > strong { flex-basis:100%; font-size:11px; font-weight:700; color:#875b2a; }
+.medical-map-tile-status,.medical-map-warning { background:#fff7e8; color:#735020; border-left:3px solid #b68435; padding:9px 12px; margin:0; font-size:11px; line-height:1.8; }
+.medical-map-tile-status[hidden] { display:none; }
+.medical-map-warning { margin-top:10px; }
+.medical-map-method { font-size:11px; color:#4a6468; margin-top:10px; line-height:1.9; }
+.medical-map-method summary { font-weight:700; cursor:pointer; color:#2d6157; }
+.medical-map-method p { margin:10px 0; }
+.medical-map-method ul { margin:9px 0 0; padding-left:17px; }
+.medical-map-state { padding:30px 24px; border:1px solid #cbdad7; border-radius:5px; background:#f4f8f5; margin-bottom:24px; color:#27493f; }
+.medical-map-state strong { font-size:15px; }
+.medical-map-state p { font-size:12px; line-height:1.9; }
+.medical-map-no-coordinates { padding:40px 30px; max-width:500px; line-height:1.9; }
+.medical-map-no-coordinates strong { font-size:16px; }
+.medical-map-no-coordinates p { font-size:13px; color:#506e64; }
+.medical-map-coordinate-grid { width:100%; height:100%; display:block; }
+.medical-map-coordinate-grid text { font:11px "Microsoft YaHei",sans-serif; fill:#41645b; }
+.medical-map-coordinate-grid [role=button] { cursor:pointer; }
+.medical-map button:focus-visible,.medical-map summary:focus-visible,.medical-map input:focus-visible,.medical-map [role=button]:focus-visible,.medical-map-canvas:focus-visible { outline:3px solid #bc7021; outline-offset:3px; }
+.medical-map .leaflet-marker-icon.medical-map-hospital-marker:focus-visible { outline:0; }
+.medical-map--compact { margin:0; }
+.medical-map--compact .medical-map-layout { grid-template-columns:minmax(0,1fr); border-radius:9px; }
+.medical-map--compact .medical-map-cartography { position:relative; }
+.medical-map--compact .medical-map-canvas { height:440px; }
+.medical-map--compact .medical-map-map-footer { display:grid; grid-template-columns:minmax(220px,1fr) auto; align-items:center; gap:16px; padding:14px 16px; background:#fff; border-top:1px solid var(--map-line); }
+.medical-map--compact .medical-map-legend { width:100%; max-width:450px; }
+.medical-map--compact .medical-map-legend-heading { font-size:14px; margin-bottom:9px; }
+.medical-map--compact .medical-map-legend-heading > span { font-size:12px; color:#344f55; }
+.medical-map--compact .medical-map-colorbar { height:12px; }
+.medical-map--compact .medical-map-scale-labels { font:700 12px/1.4 "Microsoft YaHei UI","Microsoft YaHei",sans-serif; color:#244b50; }
+.medical-map--compact .medical-map-symbol-key { font-size:12px; color:#304e53; gap:8px 14px; }
+.medical-map--compact .medical-map-ranked-key { color:#874309; line-height:1.65; }
+.medical-map--compact .medical-map-map-actions { padding:0; border:0; background:none; gap:8px; align-self:end; justify-content:flex-end; }
+.medical-map--compact .medical-map-map-actions > button { padding:9px 12px; font-size:13px; }
+.medical-map--compact .medical-map-map-actions > .medical-map-details-button { background:#176b60; color:#fff; border-color:#176b60; }
+.medical-map--compact .medical-map-map-actions > .medical-map-details-button:hover { background:#12584f; }
+.medical-map--compact .medical-map-scope { padding-top:10px; font-size:12px; line-height:1.75; color:#3c575b; }
+.medical-map--compact .medical-map-scope > strong { font-size:12px; color:#804a0c; }
+.medical-map--compact .medical-map-tile-status,.medical-map--compact .medical-map-warning { font-size:12px; color:#704310; }
+.medical-map-compact-controls { color:#3b595e; font-size:12px; margin-top:12px; }
+.medical-map-compact-controls > summary { cursor:pointer; font-weight:700; padding:6px 0; }
+.medical-map-compact-controls .medical-map-toolbar { margin-top:10px; }
+.medical-map-compact-controls .medical-map-explanation { font-size:13px; font-weight:400; }
+.medical-map-compact-controls .medical-map-method { font-size:12px; }
+.medical-map-selection--compact { position:absolute; z-index:800; top:14px; right:14px; width:min(260px,calc(100% - 28px)); padding:14px 16px; border:1px solid #b9cfc9; border-radius:10px; background:#fffffff7; box-shadow:0 5px 20px #163a3424; }
+.medical-map-selection--compact[hidden] { display:none; }
+.medical-map-selection--compact .medical-map-selection-heading { padding-right:24px; }
+.medical-map-selection--compact .medical-map-selection-heading > span { color:#275c53; font-size:12px; }
+.medical-map-selection--compact h4 { font-size:15px; line-height:1.55; margin:4px 0 8px; }
+.medical-map-selection--compact dl { margin:8px 0 0; }
+.medical-map-selection--compact dl > div { font-size:12px; gap:10px; }
+.medical-map-selection--compact dd { color:#133e39; }
+.medical-map-selection--compact .medical-map-inline-note { font-size:12px; line-height:1.65; color:#465d60; }
+.medical-map .medical-map-selection-close { position:absolute; top:8px; right:8px; width:30px; height:30px; border:0; border-radius:4px; padding:0; background:#edf3f1; color:#21453f; font:700 23px/1 sans-serif; }
+.medical-map .medical-map-selection-close:hover { background:#dce9e4; }
+.medical-map .medical-map-selection-details { display:block; width:100%; margin-top:12px; padding:8px 0; border:0; border-top:1px solid #d7e3de; color:#176b60; background:#fff; text-align:left; }
+.medical-map .medical-map-selection-details:hover { text-decoration:underline; }
+@container (max-width: 1000px) {
+  .medical-map-layout { grid-template-columns:minmax(0,1fr) 255px; }
+  .medical-map-canvas { height:440px; }
+  .medical-map-map-footer { grid-template-columns:1fr; gap:12px; }
+  .medical-map-legend { max-width:380px; }
+}
+@container (max-width: 720px) {
+  .medical-map-layout { grid-template-columns:1fr; }
+  .medical-map-canvas { height:380px; }
+  .medical-map-sidebar { border-left:0; border-top:1px solid var(--map-line); display:grid; grid-template-columns:1fr 1fr; }
+  .medical-map-weak { border-top:0; border-left:1px solid var(--map-line); }
+  .medical-map-selection { padding:15px; }
+  .medical-map-control-group button { padding:8px 10px; font-size:13px; }
+  .medical-map--compact .medical-map-canvas { height:390px; }
+  .medical-map--compact .medical-map-map-footer { grid-template-columns:1fr; gap:14px; }
+  .medical-map--compact .medical-map-legend { max-width:none; }
+  .medical-map--compact .medical-map-map-actions { justify-content:flex-start; }
+}
+@container (max-width: 480px) {
+  .medical-map-selection--compact { position:relative; z-index:auto; top:auto; right:auto; width:auto; margin:12px; box-shadow:0 2px 8px #163a341a; }
+}
+@container (max-width: 440px) {
+  .medical-map-toolbar { padding:9px; }
+  .medical-map-canvas { height:330px; }
+  .medical-map-sidebar { grid-template-columns:1fr; }
+  .medical-map-weak { border-top:1px solid var(--map-line); border-left:0; }
+  .medical-map-selection-empty { min-height:0; }
+  .medical-map-control-group > span { font-size:11px; }
+  .medical-map--compact .medical-map-canvas { height:340px; }
+  .medical-map--compact .medical-map-map-footer { padding:12px; }
+  .medical-map--compact .medical-map-legend-heading { font-size:13px; }
+  .medical-map--compact .medical-map-symbol-key { gap:7px 11px; }
+}
+@media print {
+  .medical-map-toolbar,.medical-map-map-actions { display:none; }
+  .medical-map-layout { display:block; break-inside:avoid; }
+  .medical-map-canvas { height:420px; }
+  .medical-map-sidebar { display:none; }
+  .medical-map-method { display:none; }
+  .medical-map-compact-controls,.medical-map-selection--compact { display:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .medical-map-hospital-symbol { transition:none; }
+}

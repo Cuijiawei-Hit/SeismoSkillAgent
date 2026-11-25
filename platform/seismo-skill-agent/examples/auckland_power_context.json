@@ -1,0 +1,17 @@
+{
+  "assessment_mode": "predictive",
+  "dataset_source": {"path": "../data/auckland/city.json", "format": "power_city_v1"},
+  "power_damage_mode": "most_likely",
+  "pga_g": 0.4,
+  "seed": 0,
+  "team_count": 1,
+  "daily_work_hours": 24,
+  "team_efficiency": 1,
+  "repair_objective": "function_loss_area",
+  "target_function": 0.9,
+  "ga_population": 16,
+  "ga_generations": 20,
+  "repair_constraints": {},
+  "output_language": "en-US",
+  "report_title": "Auckland Electricity-System Seismic Resilience Assessment"
+}

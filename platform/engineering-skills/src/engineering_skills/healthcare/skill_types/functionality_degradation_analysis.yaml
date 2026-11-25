@@ -1,0 +1,88 @@
+{
+  "id": "functionality_degradation_analysis",
+  "version": "1.1.0",
+  "name": "功能退化分析 Skill Type",
+  "description": "将物理损伤、人员和外部基础设施状态映射为设施服务能力退化。",
+  "domain": "urban_seismic_resilience",
+  "task": "构件依赖、资源损失和设施功能退化计算",
+  "input_semantics": [
+    "设施损伤",
+    "构件依赖",
+    "人员资源",
+    "外部基础设施可用性"
+  ],
+  "output_semantics": [
+    "资源剩余量",
+    "服务能力",
+    "功能比",
+    "功能损失",
+    "降级来源"
+  ],
+  "invariant_rules": [
+    "功能比位于0到1",
+    "资源和能力非负",
+    "降级计算必须记录采用的模型层级"
+  ],
+  "applicability": [
+    "医院",
+    "应急设施",
+    "生命线设施"
+  ],
+  "non_goals": [
+    "不把自然语言判断直接作为功能损失数值"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "dataset_artifacts",
+      "type_id": "artifact.engineering.canonical_inventory.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "metadata": "object",
+        "arrays": "object",
+        "metadata.path": "string",
+        "arrays.path": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "damage_artifact",
+      "type_id": "artifact.engineering.damage.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "hospital_function_artifact",
+      "type_id": "artifact.engineering.facility_function.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [
+    "system_fragility_analysis"
+  ],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}

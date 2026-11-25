@@ -1,0 +1,74 @@
+{
+  "id": "seismic_hazard_analysis",
+  "version": "1.1.0",
+  "name": "地震情景与工程需求分析 Skill Type",
+  "description": "将地震情景和结构工程需求参数转化为带来源与不确定性的标准化需求样本。",
+  "domain": "urban_seismic_resilience",
+  "task": "地震情景表征、EDP不确定性传播和观测/预测信息融合",
+  "input_semantics": [
+    "地震动强度",
+    "场地或情景标识",
+    "工程需求参数样本",
+    "评估模式"
+  ],
+  "output_semantics": [
+    "情景强度",
+    "EDP分布",
+    "数据来源标识",
+    "不确定性摘要"
+  ],
+  "invariant_rules": [
+    "EDP单位必须明确",
+    "样本数与请求一致",
+    "混合模式必须记录每项数据来源"
+  ],
+  "applicability": [
+    "情景地震分析",
+    "灾前预测",
+    "灾后快速评估"
+  ],
+  "non_goals": [
+    "不默认替代PSHA、场地反应分析或地震动时程计算"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "dataset_artifacts",
+      "type_id": "artifact.engineering.canonical_inventory.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "metadata": "object",
+        "arrays": "object",
+        "metadata.path": "string",
+        "arrays.path": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "hazard_demand_artifact",
+      "type_id": "artifact.engineering.demand.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}

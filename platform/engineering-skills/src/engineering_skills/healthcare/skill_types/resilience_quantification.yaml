@@ -1,0 +1,108 @@
+{
+  "id": "resilience_quantification",
+  "version": "1.1.0",
+  "name": "韧性量化 Skill Type",
+  "description": "由功能时间历程计算韧性指数、功能损失面积、恢复阈值时间和不确定性。",
+  "domain": "urban_seismic_resilience",
+  "task": "功能恢复曲线的连续韧性指标计算",
+  "input_semantics": [
+    "功能时间历程",
+    "评价时间窗",
+    "恢复阈值",
+    "可选分级规则"
+  ],
+  "output_semantics": [
+    "韧性指数",
+    "功能损失面积",
+    "恢复阈值时间",
+    "置信区间",
+    "韧性等级"
+  ],
+  "invariant_rules": [
+    "功能位于0到1",
+    "时间严格递增",
+    "恢复曲线总体单调不减",
+    "韧性指数位于0到1"
+  ],
+  "applicability": [
+    "建筑",
+    "基础设施",
+    "城市功能系统"
+  ],
+  "non_goals": [
+    "不生成恢复曲线，只量化给定或模型产生的恢复过程"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "recovery_artifact",
+      "type_id": "artifact.engineering.recovery.v1",
+      "required": false,
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "system_function_artifact",
+      "type_id": "artifact.engineering.service_function.v1",
+      "required": false,
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "scenario_ids",
+      "type_id": "data.engineering.scenario_ids.v1",
+      "required": false,
+      "contract_version": "1.1.0",
+      "field_types": {
+        "$": "array"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "strategies",
+      "type_id": "data.engineering.recovery_strategies.v1",
+      "required": false,
+      "contract_version": "1.1.0",
+      "field_types": {
+        "$": "array"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "resilience_summary_artifact",
+      "type_id": "artifact.engineering.resilience_summary.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}

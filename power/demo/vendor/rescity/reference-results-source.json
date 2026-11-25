@@ -1,0 +1,42 @@
+{
+  "reference": "RescityAgent/apps/web/public/engineering-native",
+  "files": [
+    {
+      "copy_sha256": "e7cb9f48d77ac964070b4adc3263e687702e78f7367d0c54944cfc56c64b27c9",
+      "file": "engineering-results.js",
+      "source_sha256": "151e898f8e1455d64a93abd3e04e12f8d98c69e6f124c7b54f5b062a9262d24a"
+    },
+    {
+      "copy_sha256": "2d7fef12305141ac0b390add5ff0200ea3b3ab56417023acd49e3b5d2e0e78f8",
+      "file": "engineering-results.css",
+      "source_sha256": "2d7fef12305141ac0b390add5ff0200ea3b3ab56417023acd49e3b5d2e0e78f8"
+    },
+    {
+      "copy_sha256": "59b2726044b4d999ef522892ad9080d440ff59ded11c215017040eea7c38e6ee",
+      "file": "integrated-results.js",
+      "source_sha256": "59b2726044b4d999ef522892ad9080d440ff59ded11c215017040eea7c38e6ee"
+    },
+    {
+      "copy_sha256": "4346e31bbd593071e24968d5ec0ef725dc8ad1f315bf5d5994c7f844cf98ebd5",
+      "file": "integrated-results.css",
+      "source_sha256": "4346e31bbd593071e24968d5ec0ef725dc8ad1f315bf5d5994c7f844cf98ebd5"
+    },
+    {
+      "copy_sha256": "eaa9d4a17fa76985e60b798d841523a2cdf8b7883f08f312ae77a96a7a366176",
+      "file": "publication-gallery.js",
+      "source_sha256": "7ff54b03a5822902a9e0bff97298482919b812b2f1963862278e7804197105a5"
+    },
+    {
+      "copy_sha256": "0b46178bcaa9dcd97abdee8bd3b180ae0791ab3daa6fc852172d8f969b30e057",
+      "file": "publication-gallery.css",
+      "source_sha256": "0b46178bcaa9dcd97abdee8bd3b180ae0791ab3daa6fc852172d8f969b30e057"
+    }
+  ],
+  "changes": {
+    "engineering-results.js": "Preserve the original reader layout and behavior; omit endpoint-only count wording when the saved summary does not contain that count.",
+    "publication-gallery.js": "Use this platform's read-only saved-figure manifest endpoint; preserve original figure gallery markup and styling."
+  },
+  "adapter": "reference-results.js",
+  "saved_decision_adapter": "reference-decision.js",
+  "numeric_model_changed": false
+}

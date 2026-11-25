@@ -1,0 +1,15 @@
+/* All layout and figure styling comes from the medical integrated-results.css. */
+.integrated-engineering-results .reading-overview-map { margin-bottom:24px; }
+.integrated-engineering-results .is-map-selected { background:#e1f3ee; outline:2px solid #157665; outline-offset:-2px; }
+.integrated-engineering-results .reading-selection-status { margin:14px 0; padding:12px 16px; background:#eaf5f2; color:#174e45; border-left:3px solid #197d6e; line-height:1.7; }
+.integrated-engineering-results [data-table-body] td { max-width:320px; overflow-wrap:anywhere; }
+.integrated-engineering-results .reading-muted { overflow-wrap:anywhere; }
+.integrated-engineering-results [data-trial-form] { display:flex; flex-wrap:wrap; gap:16px; align-items:end; margin:20px 0; }
+.integrated-engineering-results [data-trial-form] label { display:grid; gap:8px; color:#315567; font-size:14px; }
+.integrated-engineering-results [data-trial-form] input,
+.integrated-engineering-results [data-trial-form] select,
+.integrated-engineering-results [data-schedule-page] { min-height:40px; padding:8px 12px; border:1px solid #bfd7d9; border-radius:5px; background:white; color:#214658; font:inherit; }
+.integrated-engineering-results [data-trial-form] input { width:200px; }
+.integrated-engineering-results [data-trial-status] { color:#176e68; line-height:1.7; }
+.integrated-engineering-results [data-approved-strategy],
+.integrated-engineering-results [data-approved-page] { min-height:40px; padding:8px 12px; margin:16px 8px; border:1px solid #bfd7d9; border-radius:5px; background:white; color:#214658; font:inherit; }

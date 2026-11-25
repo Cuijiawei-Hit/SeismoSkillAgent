@@ -1,0 +1,123 @@
+{
+  "id": "recovery_optimization",
+  "version": "1.1.0",
+  "name": "恢复优化 Skill Type",
+  "description": "在修复资源和工程约束下生成修复顺序、资源分配和优化恢复曲线。",
+  "domain": "urban_seismic_resilience",
+  "task": "恢复任务排序、资源调度和韧性目标优化",
+  "input_semantics": [
+    "受损设施",
+    "修复时间",
+    "资源约束",
+    "功能模型",
+    "优化目标"
+  ],
+  "output_semantics": [
+    "修复顺序",
+    "资源计划",
+    "恢复曲线",
+    "目标值",
+    "基线比较"
+  ],
+  "invariant_rules": [
+    "资源不超用",
+    "同一工程队任务不重叠",
+    "恢复曲线单调不减",
+    "优化方案不低于保留基线"
+  ],
+  "applicability": [
+    "多设施恢复",
+    "有限抢修资源",
+    "不确定性下稳健优化"
+  ],
+  "non_goals": [
+    "不在已知单次随机实现后伪装成可实施的完全信息方案"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "dataset_artifacts",
+      "type_id": "artifact.engineering.canonical_inventory.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "metadata": "object",
+        "arrays": "object",
+        "metadata.path": "string",
+        "arrays.path": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "damage_artifact",
+      "type_id": "artifact.engineering.damage.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "hospital_function_artifact",
+      "type_id": "artifact.engineering.facility_function.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "accessibility_artifact",
+      "type_id": "artifact.engineering.accessibility.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "recovery_artifact",
+      "type_id": "artifact.engineering.recovery.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "strategies",
+      "type_id": "data.engineering.recovery_strategies.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "$": "array"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [
+    "system_fragility_analysis",
+    "functionality_degradation_analysis",
+    "accessibility_analysis"
+  ],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}

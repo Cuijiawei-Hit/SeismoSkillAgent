@@ -1,0 +1,25 @@
+# Platform dependency versions retained from the source workspace.
+numpy==2.5.2
+scipy==1.18.1
+pandas==3.0.5
+pydantic==2.13.4
+packaging==26.3
+PyYAML==6.0.3
+openpyxl==3.1.5
+python-docx==1.2.0
+Pillow==12.3.0
+matplotlib==3.11.1
+langgraph==1.2.11
+langgraph-checkpoint==4.2.0
+langgraph-checkpoint-sqlite==3.1.1
+openai==2.54.0
+httpx==0.28.1
+fastembed==0.8.0
+faiss-cpu==1.15.0
+llama-index-core==0.14.24
+llama-index-vector-stores-faiss==0.6.0
+onnxruntime==1.29.0
+tokenizers==0.23.1
+shapely==2.1.2
+pyproj==3.8.0
+pytest==9.1.1

@@ -1,0 +1,111 @@
+{
+  "id": "service_functionality_analysis",
+  "version": "1.1.0",
+  "name": "系统服务功能分析 Skill Type",
+  "description": "耦合设施能力、空间可达性和服务需求计算城市系统的震后服务功能。",
+  "domain": "urban_seismic_resilience",
+  "task": "区域服务能力、需求满足和系统功能损失计算",
+  "input_semantics": [
+    "设施服务能力",
+    "可达性结果",
+    "人口或应急需求",
+    "服务分配模型"
+  ],
+  "output_semantics": [
+    "系统功能比",
+    "节点功能比",
+    "需求满足率",
+    "系统功能损失"
+  ],
+  "invariant_rules": [
+    "功能比位于0到1",
+    "满足率位于0到1",
+    "供给不能产生负服务量"
+  ],
+  "applicability": [
+    "医疗服务系统",
+    "应急设施系统",
+    "空间服务网络"
+  ],
+  "non_goals": [
+    "不将单一平均指标作为全部系统功能结论"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "dataset_artifacts",
+      "type_id": "artifact.engineering.canonical_inventory.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "metadata": "object",
+        "arrays": "object",
+        "metadata.path": "string",
+        "arrays.path": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "hospital_function_artifact",
+      "type_id": "artifact.engineering.facility_function.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "accessibility_artifact",
+      "type_id": "artifact.engineering.accessibility.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    },
+    {
+      "name": "casualty_artifact",
+      "type_id": "artifact.engineering.emergency_response.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "system_function_artifact",
+      "type_id": "artifact.engineering.service_function.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [
+    "functionality_degradation_analysis",
+    "accessibility_analysis",
+    "casualty_dispatch_treatment"
+  ],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}

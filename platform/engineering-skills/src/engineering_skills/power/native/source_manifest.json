@@ -1,0 +1,51 @@
+[
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_power_flow.py",
+    "source_sha256": "0449438b917eb1890e8c4a36d48b3c01c3c54d5d18437e8e2ebe93ad578e2234",
+    "destination": "flow.py",
+    "destination_sha256": "0449438b917eb1890e8c4a36d48b3c01c3c54d5d18437e8e2ebe93ad578e2234",
+    "change": "none"
+  },
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_power_damage.py",
+    "source_sha256": "89e1680130aa5263a21fe92ed00d4dda1e57a21d9fc036874b996b46f8dfe18c",
+    "destination": "damage.py",
+    "destination_sha256": "89e1680130aa5263a21fe92ed00d4dda1e57a21d9fc036874b996b46f8dfe18c",
+    "change": "none"
+  },
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_power_assets.py",
+    "source_sha256": "3be1f4610d4403c3dd79a3a45e5880073e66e1fb6bf2e104191f1189fa8448d3",
+    "destination": "assets.py",
+    "destination_sha256": "3be1f4610d4403c3dd79a3a45e5880073e66e1fb6bf2e104191f1189fa8448d3",
+    "change": "none"
+  },
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_power_impact.py",
+    "source_sha256": "73f7b10adaa1f42ae246e69c09afcbd8fb06d4e1866814d6c37338e3fe9099ed",
+    "destination": "impact.py",
+    "destination_sha256": "73f7b10adaa1f42ae246e69c09afcbd8fb06d4e1866814d6c37338e3fe9099ed",
+    "change": "none"
+  },
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_recovery_optimizer.py",
+    "source_sha256": "5ca5057c5741fb7ad8c1e4f0b58feab635cc4447feec85380d340991338ff5d8",
+    "destination": "optimizer.py",
+    "destination_sha256": "bbcf31bb88cd63a70c6892dd37b547c9858a1037e9bc3795c3c1371ef3890c0e",
+    "change": "package import only"
+  },
+  {
+    "source": "RescityAgent/apps/api/app/services/engineering_water_optimization.py",
+    "source_sha256": "c1590f2c76a10376fd618c5608c842d8bbe207153a73a6a1d1d6c08742d7241a",
+    "destination": "water_parameters.py",
+    "destination_sha256": "73715ccf42baeb6a654af6f01cf44c79b11a312713f9bc44ee73ea7bf0855e93",
+    "change": "parameters function extraction only"
+  },
+  {
+    "source": "RescityAgent/apps/engineering_compute/skills/power_system.input_preparation/bootstrap.py",
+    "source_sha256": "ca07d3775b66d0bb351eb861488d978cf1ed4f5a8e94084f5d278433d5e94140",
+    "destination": "legacy.py",
+    "destination_sha256": "40a605c202e81456584aa186b4a3cd3924eeeb4d878305a7bc206c75d0672689",
+    "change": "exact function extraction, dc_opf and branch_repair_days injected per run"
+  }
+]

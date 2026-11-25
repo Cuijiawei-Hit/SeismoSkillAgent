@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "engineering-skills"
+version = "0.4.0"
+description = "Platform-independent Engineering Skills framework and healthcare seismic resilience case study"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "packaging>=23",
+  "numpy>=2.0",
+  "scipy>=1.15,<2",
+  "pandas>=2.2",
+  "pydantic>=2.7",
+  "openpyxl>=3.1",
+  "python-docx>=1.1",
+  "Pillow>=10.0",
+  "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+yaml = ["PyYAML>=6.0"]
+test = ["pytest>=8.0"]
+
+[project.scripts]
+engineering-skills = "engineering_skills.__main__:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+engineering_skills = ["**/*.yaml", "**/SKILL.md", "**/assets/*.png", "**/assets/*.json"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

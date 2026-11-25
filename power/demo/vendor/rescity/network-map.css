@@ -1,0 +1,165 @@
+/* Industrial dispatch workspace: cartography is the primary working surface. */
+.engineering-network-map{--network-ink:#173441;--network-muted:#526978;--network-line:#c4d1d9;--network-accent:#1569c7;--network-surface:#f4f7fa;color:var(--network-ink);font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+.engineering-network-map select{max-width:100%;border:1px solid #9eb1bf;border-radius:4px;padding:6px 9px;background:#fff;color:var(--network-ink);min-height:36px}
+.engineering-network-map button{border:1px solid #a3b5c2;border-radius:4px;padding:7px 11px;background:#fff;color:#173c55;font-weight:600;min-height:36px;cursor:pointer}
+.engineering-network-map button:hover{background:#e7eff7;border-color:#7391ac}
+.engineering-network-map button:focus-visible,.engineering-network-map select:focus-visible,.engineering-network-map input:focus-visible,.engineering-network-map summary:focus-visible{outline:3px solid #e08c15;outline-offset:3px}
+.engineering-network-map button:disabled{opacity:.5;cursor:default}
+.engineering-network-map .medical-map-selection dd{overflow-wrap:anywhere}
+.network-map-viewport{position:relative}
+.network-leaflet-canvas,.network-sandbox-canvas{position:absolute;inset:0;width:100%;height:100%}
+.network-leaflet-canvas{z-index:0}
+.network-sandbox-canvas{z-index:1;opacity:0;pointer-events:none}
+.has-geographic-sandbox .network-sandbox-canvas{opacity:1;pointer-events:auto}
+.has-geographic-sandbox .network-leaflet-canvas{visibility:hidden}
+.network-sandbox-status{margin:0;padding:6px 10px;border-top:1px solid var(--network-line);background:#eef3f7;color:#36566b;font-size:12px;line-height:1.5}
+.network-scene-controls label{display:flex;gap:7px;align-items:center;font-size:12px}
+.network-scene-controls [data-scene-retry][hidden]{display:none}
+.network-scene-view-note{margin:8px 0;padding:8px 10px;border-left:3px solid #1569c7;background:#edf3fa;font-size:12px;line-height:1.6}
+.network-scene-view-note[data-scene-mode="failed"]{border-left-color:#b87524;background:#fff7e9;color:#70451d}
+.network-expanded{position:fixed;inset:0;background:#fff;z-index:1200;overflow:hidden}
+
+.engineering-network-map.network-map-workspace{display:flex;flex-direction:column;gap:0;width:100%;height:clamp(540px,76dvh,900px);min-width:0;min-height:0;padding:0;border:1px solid var(--network-line);border-radius:7px;background:var(--network-surface);overflow:hidden}
+.engineering-network-map.network-map-workspace>.medical-map-toolbar{display:flex;align-items:center;justify-content:flex-start;gap:6px 12px;flex-wrap:wrap;flex-shrink:0;margin:0;padding:8px 10px;border:0;border-bottom:1px solid var(--network-line);border-radius:0;background:#f4f7fa;min-height:50px}
+.engineering-network-map.network-map-workspace .medical-map-control-group{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px}
+.engineering-network-map.network-map-workspace .medical-map-control-group>span{color:var(--network-muted)}
+.engineering-network-map.network-map-workspace .network-map-workspace-actions{margin-left:auto}
+.engineering-network-map.network-map-workspace .map-fullscreen-button{background:#173c55;color:#fff;border-color:#173c55}
+.engineering-network-map.network-map-workspace .map-fullscreen-button:hover{background:#0f2e44}
+.engineering-network-map.network-map-workspace button[aria-expanded="true"]{border-color:#1569c7;background:#e8f1fc;color:#084d9b}
+.engineering-network-map.network-map-workspace>.medical-map-layout{position:relative;display:block;flex:1;width:100%;min-height:0;border:0;border-radius:0;overflow:hidden}
+.engineering-network-map.network-map-workspace .medical-map-cartography{display:flex;flex-direction:column;height:100%;width:100%;min-height:0}
+.engineering-network-map.network-map-workspace .medical-map-canvas{flex:1 1 0;width:100%;height:auto!important;min-height:0!important}
+.engineering-network-map.network-map-workspace .medical-map-map-footer{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:5px 10px;min-height:36px;max-height:84px;overflow:auto;border-top:1px solid #b9c9d4;background:#fff;color:#173441;font-size:13px;line-height:1.45;scrollbar-width:thin}
+.engineering-network-map.network-map-workspace .medical-map-map-footer p{margin:0;white-space:nowrap}
+.engineering-network-map.network-map-workspace .medical-map-map-footer:has(.regional-map-legend)>p{display:none}
+.engineering-network-map.network-map-workspace .medical-map-map-footer .regional-map-legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0;padding:0;border:0;font-size:13px;line-height:1.4;width:100%}
+.engineering-network-map.network-map-workspace .regional-map-legend span{white-space:nowrap}
+.engineering-network-map .regional-map-legend i{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:0;border-radius:3px;box-shadow:none;flex:none;overflow:hidden}
+.engineering-network-map .regional-map-legend i svg{display:block;width:20px;height:20px;flex:none}
+.engineering-network-map .regional-map-legend span{display:inline-flex;align-items:center;gap:5px}
+.engineering-network-map .regional-map-legend button.regional-map-legend-item{display:inline-flex;align-items:center;gap:6px;flex:none;min-height:30px;padding:3px 7px;border:1px solid #b8c9d5;border-radius:4px;background:#fff;color:#183344;font-size:13px;font-weight:600;line-height:1.4;white-space:nowrap;box-shadow:none}
+.engineering-network-map .regional-map-legend button.regional-map-legend-item:hover{background:#edf4fb;border-color:#457398;color:#122d45}
+.engineering-network-map .regional-map-legend button.regional-map-legend-item strong{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 3px;border-radius:3px;background:#e8eef4;color:#102a3e;font-size:12px;font-variant-numeric:tabular-nums}
+.engineering-network-map .regional-map-legend .regional-map-legend-note{font-size:12px;font-weight:500;color:#455d6c;white-space:normal;line-height:1.4}
+
+/* Keep object meanings and visibility controls on the map in both dimensions. */
+.engineering-network-map .network-map-display-legend{position:absolute;z-index:830;top:52px;right:10px;display:flex;flex-direction:column;width:clamp(210px,24%,260px);max-height:calc(100% - 66px);border:1px solid #8aa1b4;border-radius:6px;background:#fffffff5;color:#183447;box-shadow:0 3px 12px #17344128;overflow:hidden;font-size:12px;line-height:1.4;pointer-events:auto}
+.engineering-network-map .network-map-display-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none;padding:7px 9px;border-bottom:1px solid #c6d3de;background:#f1f5f9}
+.engineering-network-map .network-map-display-heading strong{display:block;font-size:13px;font-weight:700;color:#14364e}
+.engineering-network-map .network-map-display-heading small{display:block;font-size:11px;color:#4b6375}
+.engineering-network-map .network-map-display-heading button{min-height:28px;padding:3px 7px;font-size:11px}
+.engineering-network-map [data-map-display-body]{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:5px 7px;min-height:0}
+.engineering-network-map [data-map-display-body][hidden]{display:none}
+.engineering-network-map .network-map-display-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:1px}
+.engineering-network-map label.network-map-display-item{display:grid;grid-template-columns:16px 24px minmax(0,1fr) 24px;align-items:center;gap:5px;min-height:29px;margin:0;padding:2px 3px;border-radius:3px;color:#183447;font-size:12px;cursor:pointer;line-height:1.3}
+.engineering-network-map .network-map-display-item:hover{background:#e8f0f8}
+.engineering-network-map .network-map-display-item:has(input:not(:checked)){color:#526878}
+.engineering-network-map .network-map-display-item input[type="checkbox"]{display:block;flex:none;width:16px;height:16px;min-width:16px;margin:0;cursor:pointer;accent-color:#1569c7}
+.engineering-network-map .network-map-display-item>i{display:flex;align-items:center;justify-content:center;width:24px;height:24px;margin:0;font-style:normal}
+.engineering-network-map .network-map-display-item>i>svg{display:block;width:24px;height:24px;flex:none}
+.engineering-network-map .network-map-display-item>span{min-width:0;overflow-wrap:anywhere}
+.engineering-network-map .network-map-display-item>b{font-size:11px;font-weight:600;text-align:right;color:#496174;font-variant-numeric:tabular-nums}
+.engineering-network-map .network-map-label-toggle{grid-column:1/-1}
+.engineering-network-map .network-map-text-key{font-size:17px;font-weight:700;color:#183447}
+.engineering-network-map .network-map-line-key{display:block;width:23px;height:0;border-top:3px solid #165480;box-shadow:0 0 0 1px #fff;transform:rotate(-25deg)}
+.engineering-network-map .network-map-grid-symbols{display:flex;flex-wrap:wrap;gap:3px 8px;padding:6px 2px;margin-top:5px;border-top:1px solid #d1dce5;color:#38556a;font-size:10px}
+.engineering-network-map .network-map-grid-symbols>span{display:inline-flex;align-items:center;gap:3px;white-space:nowrap}
+.engineering-network-map .network-map-grid-symbols svg{width:17px;height:17px;flex:none}
+.engineering-network-map .network-map-state-key{display:flex;flex-wrap:wrap;gap:4px 8px;padding:6px 2px;border-top:1px solid #d1dce5;font-size:10px;color:#29485d}
+.engineering-network-map .network-map-state-key>span{display:inline-flex;align-items:center;gap:4px}
+.engineering-network-map .network-map-state-key i{display:inline-block;width:9px;height:9px;border:1px solid #17344144;border-radius:2px;flex:none}
+.engineering-network-map [data-map-display-body]>p{margin:5px 2px 2px;font-size:10px;line-height:1.5;color:#526878}
+.engineering-network-map .network-map-display-legend.is-collapsed{width:155px}
+.engineering-network-map.network-details-open .network-map-display-legend{left:10px;right:auto;width:155px}
+.engineering-network-map.network-details-open .network-map-display-legend [data-map-display-body]{display:none}
+.engineering-network-map:has(.network-map-display-legend) .network-map-status-strip{display:block;max-width:calc(100% - 350px);max-height:48px;overflow:hidden;line-height:1.5}
+.engineering-network-map:has(.network-map-display-legend) .network-map-status-strip strong{display:block;white-space:normal}
+.engineering-network-map:has(.network-map-display-legend) .network-map-status-strip>span{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:760px){.engineering-network-map .network-map-display-legend{top:50px;right:7px;width:210px;max-height:calc(100% - 60px)}.engineering-network-map:has(.network-map-display-legend) .network-map-status-strip{max-width:calc(100% - 285px);max-height:42px;font-size:10px}.engineering-network-map .network-map-grid-symbols,.engineering-network-map .network-map-state-key{font-size:10px}}
+
+.network-recovery-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;font-size:12px}
+.network-recovery-controls input{flex:1;min-width:100px;accent-color:#1569c7}
+.engineering-network-map.network-map-workspace .network-map-player{flex-shrink:0;margin:0;padding:8px 10px;border-top:1px solid var(--network-line);background:#edf3f8;gap:8px;min-height:50px}
+.engineering-network-map .network-map-player [data-time]{font-size:12px;font-weight:700;color:#153e60;font-variant-numeric:tabular-nums}
+.engineering-network-map .network-map-player [data-play-time]{font-size:11px;font-variant-numeric:tabular-nums;color:#37566b}
+.engineering-network-map .network-map-player [data-play]{background:#1569c7;border-color:#1569c7;color:#fff;min-width:70px}
+.engineering-network-map .network-map-player [data-play]:hover{background:#0b57aa}
+.engineering-network-map .network-map-player input[type="range"]{min-width:90px;flex:1 1 170px;height:25px;cursor:pointer}
+.engineering-network-map .network-map-player [data-play-speed]{width:74px;font-size:12px}
+.engineering-network-map .regional-playback-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px}
+.engineering-network-map .regional-playback-tools label{display:flex;align-items:center;gap:5px;white-space:nowrap}
+.engineering-network-map .regional-map-presets{display:inline-flex;gap:0;padding:2px;border:1px solid #b8c8d6;border-radius:5px;background:#e8eef4}
+.engineering-network-map .regional-map-presets button{min-height:36px;border:0;border-radius:3px;padding:6px 10px;background:transparent;color:#436075;font-size:12px;font-weight:600}
+.engineering-network-map .regional-map-presets button[aria-pressed="true"]{color:#084d9b;background:#fff;box-shadow:0 1px 3px #17344126}
+.engineering-network-map .network-map-view-control{display:flex;align-items:center;gap:6px;font-size:12px;color:#526978}
+.engineering-network-map .network-map-view-control select{max-width:150px}
+.engineering-network-map .network-map-basemap-control{display:inline-flex;align-items:center;gap:6px;color:#526978;font-size:12px;white-space:nowrap}
+.engineering-network-map .network-map-basemap-control select{max-width:156px;font-size:12px}
+
+.engineering-network-map.network-map-workspace .medical-map-sidebar,.engineering-network-map .network-map-layer-panel{position:absolute;z-index:950;top:10px;bottom:106px;right:10px;width:min(320px,calc(100% - 20px));min-width:0;display:flex;flex-direction:column;border:1px solid #acbdca;border-radius:6px;background:#fff;box-shadow:0 6px 24px #16334333;overflow:hidden}
+.engineering-network-map .network-map-layer-panel{right:auto;left:10px;width:min(350px,calc(100% - 20px))}
+.engineering-network-map.network-map-workspace .medical-map-sidebar[hidden],.engineering-network-map .network-map-layer-panel[hidden]{display:none!important}
+.engineering-network-map.network-map-workspace.network-details-open .medical-map-sidebar{display:flex!important}
+.engineering-network-map .network-map-panel-header{display:flex;align-items:center;justify-content:space-between;flex:none;gap:12px;padding:10px 12px;border-bottom:1px solid #d1dce4;background:#f2f6fa;font-size:13px}
+.engineering-network-map .network-map-panel-header button{min-height:36px;padding:4px 9px;font-size:13px}
+.engineering-network-map .network-map-panel-content{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:10px 12px;font-size:13px;line-height:1.6}
+.engineering-network-map .network-map-panel-content>p,.engineering-network-map .network-map-panel-content details p{margin:8px 0}
+.engineering-network-map .network-map-panel-content details{margin:9px 0}
+.engineering-network-map .network-map-panel-content details summary{cursor:pointer;font-weight:600;color:#174764;padding:5px 0}
+.engineering-network-map .network-map-panel-content ul{margin:6px 0;padding-left:17px}
+.engineering-network-map .network-map-native-layers{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding-bottom:10px;border-bottom:1px solid #dae3e9}
+.engineering-network-map .network-map-native-layers label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.engineering-network-map input[type="checkbox"]{accent-color:#1569c7}
+.engineering-network-map .network-map-data-tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid #dae3e9}
+.engineering-network-map .regional-map-controls{margin:0;padding:0;border:0;border-radius:0;background:#fff;color:var(--network-ink);font-size:12px;line-height:1.6}
+.engineering-network-map .regional-map-heading{display:none}
+.engineering-network-map .regional-map-controls>p{margin:10px 0;color:#526978}
+.engineering-network-map .regional-map-layers{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin:12px 0}
+.engineering-network-map .regional-map-layers label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.engineering-network-map .regional-object-picker{display:grid;grid-template-columns:1fr;gap:5px;margin:0 0 12px}
+.engineering-network-map .regional-object-picker select{width:100%}
+.engineering-network-map .regional-object-picker small{color:#617581;font-size:11px}
+.engineering-network-map .medical-map-sidebar label:not(.regional-object-picker){display:grid;gap:5px;padding:8px 0;font-size:12px}
+.engineering-network-map .medical-map-selection{padding:0;margin:6px 0 12px}
+.engineering-network-map .medical-map-selection h3{font-size:15px;line-height:1.5;margin:8px 0;overflow-wrap:anywhere}
+.engineering-network-map .medical-map-selection dl{display:grid;grid-template-columns:minmax(75px,.42fr) minmax(0,.58fr);gap:7px 12px;margin:12px 0;font-size:13px}
+.engineering-network-map .medical-map-selection dt{color:#587081}
+.engineering-network-map .medical-map-selection dd{margin:0;max-width:none;text-align:left;color:#173441;font-weight:600}
+.engineering-network-map .network-map-status-strip{position:absolute;z-index:810;top:10px;left:54px;max-width:calc(100% - 110px);display:flex;gap:12px;padding:7px 10px;margin:0;border:1px solid #a9bccb;border-radius:4px;background:#fff;color:#183f59;box-shadow:0 2px 8px #17344112;font-size:12px;pointer-events:none}
+.engineering-network-map .network-map-status-strip strong{font-weight:600;font-variant-numeric:tabular-nums}
+.engineering-network-map.network-layers-open .network-map-status-strip,.engineering-network-map.network-details-open .network-map-status-strip{display:none}
+.engineering-network-map .power-map-key{display:flex;flex-wrap:wrap;gap:8px 12px;margin:10px 0;padding:10px 0;border-top:1px solid #d1dce4;font-size:11px}
+.engineering-network-map .power-map-key-item{display:inline-flex;align-items:center;gap:5px}
+.engineering-network-map .power-map-key-item svg{width:19px;height:19px}
+.engineering-network-map .power-map-key-item b{color:#155991;font-weight:600}
+.power-line-sample{width:23px;height:0;border-top:3px solid #165480}
+.power-line-sample-dashed{border-top-style:dashed}
+.power-map-symbol,.regional-map-symbol{background:none;border:0}
+.power-map-symbol svg{display:block;filter:drop-shadow(0 1px 1px #17334044)}
+.regional-map-symbol svg{filter:drop-shadow(0 1px 2px #233c3b55)}
+.engineering-network-map .leaflet-tooltip.regional-map-object-label{opacity:1!important;display:flex;flex-direction:column;gap:2px;width:max-content;min-width:118px;max-width:220px;padding:5px 8px;background:#fff;border:1px solid #243c4b;border-radius:5px;color:#152b3a;box-shadow:0 0 0 2px #fff,0 2px 5px #122d4533;text-shadow:none;font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:13px;line-height:1.35;white-space:normal;pointer-events:none}
+.engineering-network-map .leaflet-tooltip.regional-map-object-label::before{display:none}
+.engineering-network-map .regional-map-object-label .regional-map-object-title{display:block;color:#152b3a;font-size:13px;line-height:1.35;font-weight:700;overflow-wrap:anywhere}
+.engineering-network-map .regional-map-object-label .regional-map-object-status{display:block;font-size:12px;font-weight:700;line-height:1.35}
+.engineering-network-map .regional-map-object-label .regional-map-object-basis{display:block;color:#435965;font-size:11px;font-weight:500;line-height:1.35}
+.regional-map-focused{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 2px #162936)}
+.regional-map-route-animated{stroke-dasharray:9 7;animation:network-route-flow 1.5s linear infinite}
+.regional-map-moving svg{animation:network-resource-pulse 1.7s ease-in-out infinite}
+@keyframes network-route-flow{to{stroke-dashoffset:-32}}
+@keyframes network-resource-pulse{50%{filter:drop-shadow(0 0 5px #1569c788)}}
+
+/* Scoped overrides keep other medical fullscreen maps unchanged. */
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen{gap:0;padding:0!important;border:0;border-radius:0;height:100dvh!important;min-height:0!important}
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen>.medical-map-toolbar{padding:7px 10px;margin:0}
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen>.medical-map-layout{flex:1;min-height:0}
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen .medical-map-canvas{min-height:0!important}
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen .medical-map-map-footer{padding:5px 10px}
+.medical-map.engineering-network-map.network-map-workspace.map-fullscreen.network-details-open .medical-map-sidebar{display:flex!important}
+@media(max-width:760px){.engineering-network-map.network-map-workspace{height:clamp(510px,78dvh,760px)}.engineering-network-map.network-map-workspace>.medical-map-toolbar{gap:6px;padding:7px}.engineering-network-map.network-map-workspace button{padding:6px 9px;font-size:12px}.engineering-network-map .network-map-view-control{font-size:0}.engineering-network-map .network-map-view-control select{font-size:12px;max-width:115px}.engineering-network-map .network-map-status-strip span{display:none}.engineering-network-map .network-map-player [data-play-time]{display:none}.engineering-network-map .network-map-player input[type="range"]{min-width:100px}}
+@media(max-width:760px){.engineering-network-map .network-map-basemap-control{font-size:0}.engineering-network-map .network-map-basemap-control select{max-width:140px;font-size:12px}.engineering-network-map.network-map-workspace .medical-map-map-footer{max-height:84px;padding:4px 7px}.engineering-network-map .regional-map-legend button.regional-map-legend-item{font-size:12px;padding:3px 5px}.engineering-network-map .leaflet-tooltip.regional-map-object-label{max-width:180px;padding:4px 6px}}
+@media(max-width:480px){.engineering-network-map .regional-map-presets{order:4;width:100%}.engineering-network-map .regional-map-presets button{flex:1}.engineering-network-map .network-map-workspace-actions{margin-left:0!important}.engineering-network-map .network-map-status-strip{font-size:10px;left:48px;padding:5px 7px}.engineering-network-map .network-map-player{padding:6px 8px;gap:6px}.engineering-network-map .network-map-player input[type="range"]{flex-basis:calc(100% - 90px)}.engineering-network-map .network-map-layer-panel,.engineering-network-map.network-map-workspace .medical-map-sidebar{bottom:144px}}
+@media(prefers-reduced-motion:reduce){.regional-map-route-animated,.regional-map-moving svg{animation:none}}
+
+/* Population-only maps have no grid metric selector. Preserve semantic hiding in the flex toolbar. */
+.engineering-network-map.network-map-workspace .medical-map-control-group[hidden]{display:none}

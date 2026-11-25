@@ -1,0 +1,76 @@
+{
+  "id": "accessibility_analysis",
+  "version": "1.1.0",
+  "name": "交通可达性分析 Skill Type",
+  "description": "根据需求点、服务设施和交通阻抗计算覆盖、可达范围和距离衰减权重。",
+  "domain": "urban_seismic_resilience",
+  "task": "震后交通条件下的设施可达性和服务覆盖分析",
+  "input_semantics": [
+    "需求点",
+    "服务设施",
+    "通行时间或网络",
+    "服务半径",
+    "距离衰减模型"
+  ],
+  "output_semantics": [
+    "可达矩阵",
+    "衰减权重",
+    "覆盖人口",
+    "不可达人口",
+    "最近通行时间"
+  ],
+  "invariant_rules": [
+    "通行时间非负",
+    "衰减权重非负",
+    "覆盖人口不超过总人口"
+  ],
+  "applicability": [
+    "道路网络",
+    "医疗可达性",
+    "应急服务覆盖"
+  ],
+  "non_goals": [
+    "仅有OD时间矩阵时不推断道路物理损伤或交通流容量"
+  ],
+  "contract_version": "1.1.0",
+  "consumes": [
+    {
+      "name": "dataset_artifacts",
+      "type_id": "artifact.engineering.canonical_inventory.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "metadata": "object",
+        "arrays": "object",
+        "metadata.path": "string",
+        "arrays.path": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "produces": [
+    {
+      "name": "accessibility_artifact",
+      "type_id": "artifact.engineering.accessibility.v1",
+      "contract_version": "1.1.0",
+      "field_types": {
+        "path": "string",
+        "media_type": "string",
+        "description": "string"
+      },
+      "description": "Generic semantic requirement; domain adapters bind their concrete artifact/schema without changing numeric kernels."
+    }
+  ],
+  "dependency_type_ids": [],
+  "applicability_conditions": [
+    {
+      "field": "assessment_mode",
+      "operator": "in",
+      "expected": [
+        "predictive",
+        "rapid",
+        "hybrid"
+      ],
+      "description": "The capability requires an explicitly supported assessment mode; domain model applicability is checked by the Implementation."
+    }
+  ]
+}
