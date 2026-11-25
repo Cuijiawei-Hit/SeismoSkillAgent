@@ -62,3 +62,10 @@ def test_release_scan_rejects_a_key_inside_a_report(tmp_path, monkeypatch):
         archive.writestr('word/document.xml', '<text>' + key + '</text>')
     with pytest.raises(ValueError, match='Credential found in document'):
         scan(tmp_path)
+
+
+def test_public_path_cleanup_preserves_source_urls():
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+    from export_public_release import portable
+    assert portable('https://example.org/source/data.json') == 'https://example.org/source/data.json'
+    assert portable('H:/private/folder/source.json') == 'source.json'

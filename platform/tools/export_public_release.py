@@ -46,7 +46,7 @@ def portable(value):
     if isinstance(value, str):
         if re.match(r'^[A-Za-z]:[\\/]', value):
             return PureWindowsPath(value).name
-        return re.sub(r'[A-Za-z]:[\\/][^\n`<>|]+', lambda m: PureWindowsPath(m[0]).name, value)
+        return re.sub(r'(?<![A-Za-z0-9])[A-Za-z]:[\\/][^\n`<>|]+', lambda m: PureWindowsPath(m[0]).name, value)
     return value
 
 
@@ -138,7 +138,7 @@ def scan(stage):
         if not path.is_file():
             continue
         relative = path.relative_to(stage).as_posix()
-        if any(part in {'.venv', 'runtime', '.git'} for part in path.relative_to(stage).parts):
+        if any(part in {'.venv', 'runtime', '.git', '__pycache__', '.pytest_cache'} for part in path.relative_to(stage).parts):
             raise ValueError('Runtime or private checkout file in release: ' + relative)
         data = path.read_bytes()
         if (key_bytes and key_bytes in data) or any(pattern.search(data) for pattern in patterns):
@@ -158,7 +158,8 @@ def finalize(folder):
     stage = folder / 'PowerSkillAgent'
     count = scan(stage)
     records = [{'path': p.relative_to(stage).as_posix(), 'size_bytes': p.stat().st_size,
-                'sha256': sha256(p.read_bytes()).hexdigest()} for p in sorted(stage.rglob('*')) if p.is_file()]
+                'sha256': sha256(p.read_bytes()).hexdigest()} for p in sorted(stage.rglob('*'))
+               if p.is_file() and p != stage / 'RELEASE_MANIFEST.json']
     manifest = {'version': VERSION, 'default_example': DEMO_ID, 'default_language': 'en-US',
                 'credential_scan': 'passed', 'credentials_included': False,
                 'knowledge_documents': 87, 'embedding_included': True, 'files': records}
